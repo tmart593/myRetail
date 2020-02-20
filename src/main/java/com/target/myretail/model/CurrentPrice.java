@@ -8,17 +8,26 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
+/**
+ * Product price data - this pojo is part
+ * of the Product class. Note input validation
+ * via annotations is included.
+ *
+ */
+
 public class CurrentPrice {
 
     @NotNull
     @Digits(integer=13, fraction = 2)
     private BigDecimal value;
+
     @JsonProperty("currency_code")
     @NotNull
     private String currencyCode;
 
     public CurrentPrice(){
     }
+    //check against the CurrencyCode enum
     @AssertTrue(message = "must use a valid currency code")
     public boolean isValidCurrencyCode(){
         return !StringUtils.isEmpty(this.currencyCode) &&

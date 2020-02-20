@@ -14,6 +14,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Handles retrieving Product info (name) from
+ * a data source (currently a REST call to https://redsky.target.com)
+ */
+
 @Service
 public class ProductInfoService {
 

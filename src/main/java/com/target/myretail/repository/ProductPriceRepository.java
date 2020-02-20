@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Interfaces with the 'productprice' collection in mongo db 'myretail'.
+ */
 @Repository
 public interface ProductPriceRepository extends MongoRepository<ProductPrice, String> {
     ProductPrice findByid(@Param("id") long id);

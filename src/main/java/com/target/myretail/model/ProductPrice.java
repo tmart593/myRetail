@@ -5,6 +5,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 
+/**
+ * Represents a document record in productprice
+ * Collection in a mongodb database - holds
+ * Product price(value) and currency code.
+ */
 @Document(collection = "productprice")
 public class ProductPrice {
 

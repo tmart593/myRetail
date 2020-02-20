@@ -10,6 +10,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
 
+/**
+ * Product model -input validation
+ * via annotations is included.
+ */
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Product implements Serializable {
     private static final long serialVersion = 1;

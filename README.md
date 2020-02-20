@@ -89,6 +89,7 @@ output can also be directed to a file by appending to the command: > test_GET_no
 # Preparing for production 
 
 
+add security to the app - OAuth2/stargate etc
 
 add a 'develop' branch for devlopers to make PR requests to
 
@@ -98,9 +99,24 @@ add Swagger support
 
 add profiling/monitoring such as prometheus/micrometer/grafana
 
-improve error messages for field level errors - path variables, etc
+_____________________________________________________
 
-add security to the app - OAuth2/stargate etc
+Misc Code Cleanup -  
+
+improve text of error messages for field level errors - path variables, etc
+
+CurrencyCode class should be refactored to include  
+all currencies required by business, or other utility  
+could be used instead of this enum.
+
+create constants classes or property files for  
+managing various messages (for interaction with  
+client and for logging) - also error codes could  
+be introduced to be included in error responses  
+and logged, making it easier to track down errors.  
+
+do thorough code reviews with a dev team
+
 
 __________________________________________________________
 
@@ -121,37 +137,36 @@ performance tests done with jmeter or similar load testing tool
 create a product in a deployment environment (openshift, azure, AWS etc)
 ___________________________________________________________
 
-refactor Update Product api - 
+refactor Update Product api (PUT) - 
 
-```
+
 the product info service should be replaced with an actual internal service
 (including all the tests for each env)
 
-if the update product api is intended to update
-both the price data and the other data (name etc)
-then several approaches could be taken -
+if the update product api is intended to update  
+both the price data and the other data (name etc)  
+then several approaches could be taken -  
      
-     1. if the one service should update all the data for a product
-     (ie more than just the price data), and that
-     data resides in 2 data sources that cannot be
-     connected as part of a transaction or 2 phase commit,
-     then some type of eventual consistency approach is needed -
-     for example, through kafka messaging updates to
-     each data source could taken care of -
-     this would depend on the time allowed for eventual consistency
-     and the recovery process.
+     1. if the one service should update all the data for a product  
+     (ie more than just the price data), and that  
+     data resides in 2 data sources that cannot be  
+     connected as part of a transaction or 2 phase commit,  
+     then some type of eventual consistency approach is needed -  
+     for example, through kafka messaging updates to   
+     each data source could taken care of -  
+     this would depend on the time allowed for eventual consistency  
+     and the recovery process.  
      
-     2. more ideally each data source would have its own microservice
-        and be updated independently, ie the client
-        would call each one separately
+     2. more ideally each data source would have its own microservice  
+        and be updated independently, ie the client  
+        would call each one separately  
 
-     3. the 2 data sources could be part of a (RDBMS) transaction
-         i.e. use traditional relational databases that have rollback ability
-         or even have the data stored in one relational db,
-         thus making a transaction very easy
+     3. the 2 data sources could be part of a (RDBMS) transaction  
+         i.e. use traditional relational databases that have rollback ability  
+         or even have the data stored in one relational db,  
+         thus making a transaction very easy  
 
           
-```
   
 
 

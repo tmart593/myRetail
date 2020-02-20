@@ -1,5 +1,8 @@
 package com.target.myretail.model;
 
+/**
+ * Title and ID of Product
+ */
 public class ProductInfo {
     long id;
     String name;
@@ -8,7 +11,6 @@ public class ProductInfo {
         this.id = id;
         this.name = name;
     }
-
     public long getId() {
         return id;
     }

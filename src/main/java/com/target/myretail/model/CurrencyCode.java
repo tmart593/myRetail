@@ -4,6 +4,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * basic class for listing currency codes - should be made more
+ * complete at some point depending on business needs.
+ *
+ */
 public enum CurrencyCode {
     EUR("EUR"),
     USD("USD"),
