@@ -1,12 +1,12 @@
 package com.target.myretail.exception;
 
-public class Violation {
+public class DataInputError {
 
     private String fieldName;
 
     private String message;
 
-    public Violation(String fieldName, String message) {
+    public DataInputError(String fieldName, String message) {
         this.fieldName = fieldName;
         this.message = message;
     }

@@ -16,10 +16,10 @@ public class ResponseMessageUtility {
 
     }
 
-    public static String composeFromErrorList(List<Violation> violationList) {
+    public static String composeFromErrorList(List<DataInputError> dataInputErrorList) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            return mapper.writeValueAsString(violationList);
+            return mapper.writeValueAsString(dataInputErrorList);
         } catch (JsonProcessingException e) {
             return composeErrorMessage("problem creating field level errror data");
         }

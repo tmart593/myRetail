@@ -15,15 +15,17 @@ the project was implemented with java 8 and Spring Boot
 the database used was MongoDB, run locally  
 unit testing was done with the spock framework  
 
-tools used included: maven, Postman, git, mongodb  
+tools used included: intellij, maven, Postman, git, mongodb -  
 these should be installed locally  
 ```
 
 # Environment Setup
 
 accessing the project:  
-download or clone the github project:  
-https://github.com/tmart593/myRetail  
+    download or clone the github project:  
+    https://github.com/tmart593/myRetail  
+
+install java, maven, Postman, git
 
 install MongoDB and start running on localhost:27017  
 
@@ -31,7 +33,7 @@ run the database setup script (dbsetup.js) located in <project root dir>/scripts
 
 $ mongo localhost:27017/myretail ./scripts/dbsetup.js  
 
-  
+ 
   
 # Running the application
 
@@ -93,6 +95,11 @@ add security to the app - OAuth2/stargate etc
 
 add a 'develop' branch for devlopers to make PR requests to
 
+set up all environments - dev, test, perf, stage, prod
+      application-dev.properties, application-test.properties, etc
+
+set up database for all envs
+
 add more documentation  
 
 add Swagger support
@@ -124,48 +131,51 @@ testing and CI/CD -
 
 add more unit tests to gain 100% code coverage
 
-create integration tests
+create dockerfile 
+
+create integration tests - create docker-compose file for testing
 
 set up jenkins pipeline (jenkinsfile) to include above tests, ideally also including
-          code quality software such as sonarqube
+          code quality software such as sonarqube as part of dev check in
           
-jenkins should handle creating tags for releases (based on the master branch)
+create tags for releases (based on the master branch)
                    
-performance tests done with jmeter or similar load testing tool
+performance tests done with jmeter or similar load testing tool -  
      do a significant amount of this and confirm SLA is being met
+
+create smoke tests
 
 create a product in a deployment environment (openshift, azure, AWS etc)
 ___________________________________________________________
 
 refactor Update Product api (PUT) - 
 
-
 the product info service should be replaced with an actual internal service
-(including all the tests for each env)
+(including all the tests needed for each env)
 
 if the update product api is intended to update  
 both the price data and the other data (name etc)  
 then several approaches could be taken -  
      
-     1. if the one service should update all the data for a product  
-     (ie more than just the price data), and that  
-     data resides in 2 data sources that cannot be  
+ - if data resides in 2 data sources that cannot be  
      connected as part of a transaction or 2 phase commit,  
      then some type of eventual consistency approach is needed -  
-     for example, through kafka messaging updates to   
-     each data source could taken care of -  
-     this would depend on the time allowed for eventual consistency  
-     and the recovery process.  
+     for example, through kafka messaging to services that update   
+     each data source  -  
+     this would depend on the SLA of time allowed for eventual consistency  
+     and the recovery process if errors were encountered. 
      
-     2. more ideally each data source would have its own microservice  
-        and be updated independently, ie the client  
-        would call each one separately  
-
-     3. the 2 data sources could be part of a (RDBMS) transaction  
-         i.e. use traditional relational databases that have rollback ability  
-         or even have the data stored in one relational db,  
-         thus making a transaction very easy  
-
+ - the 2 data source updates could be part of one transaction  
+      i.e. use traditional relational databases that have rollback ability,   
+      or even have the data stored in one relational db,  
+      thus making a transaction very easy  
+ 
+ - more ideally, each data source would have its own microservice  
+    and be updated independently, ie the client  
+    would call each one separately  
+    
+ 
+    
           
   
 

@@ -5,10 +5,10 @@ import java.util.List;
 
 public class ValidationErrorResponse {
 
-    private List<Violation> violations = new ArrayList<>();
+    private List<DataInputError> dataInputErrors = new ArrayList<>();
 
-    public List<Violation> getViolations() {
-        return violations;
+    public List<DataInputError> getDataInputErrors() {
+        return dataInputErrors;
     }
 
 }

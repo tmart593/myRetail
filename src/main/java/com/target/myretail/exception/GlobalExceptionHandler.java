@@ -1,7 +1,6 @@
 package com.target.myretail.exception;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.target.myretail.model.CurrencyCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -11,9 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
@@ -54,10 +51,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> onConstraintValidationException(ConstraintViolationException e) {
         ValidationErrorResponse error = new ValidationErrorResponse();
         for (ConstraintViolation violation : e.getConstraintViolations()) {
-            error.getViolations().add(
-                    new Violation(violation.getPropertyPath().toString(), violation.getMessage()));
+            error.getDataInputErrors().add(
+                    new DataInputError(violation.getPropertyPath().toString(), violation.getMessage()));
         }
-        return new ResponseEntity<String>(ResponseMessageUtility.composeFromErrorList(error.getViolations()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<String>(ResponseMessageUtility.composeFromErrorList(error.getDataInputErrors()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -65,10 +62,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> onMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         ValidationErrorResponse error = new ValidationErrorResponse();
         for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
-            error.getViolations().add(
-                    new Violation(fieldError.getField(), fieldError.getDefaultMessage()));
+            error.getDataInputErrors().add(
+                    new DataInputError(fieldError.getField(), fieldError.getDefaultMessage()));
         }
-        return new ResponseEntity<String>(ResponseMessageUtility.composeFromErrorList(error.getViolations()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<String>(ResponseMessageUtility.composeFromErrorList(error.getDataInputErrors()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ServiceException.class)

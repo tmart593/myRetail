@@ -1,5 +1,6 @@
 package com.target.myretail.service
 
+import com.target.myretail.exception.DataInputException
 import com.target.myretail.model.CurrencyCode
 import com.target.myretail.model.CurrentPrice
 import com.target.myretail.model.Product
@@ -37,17 +38,12 @@ class ProductServiceSpec extends Specification {
         product.name==name
         product.getCurrentPrice().value==22.95
 
-
-
     }
 
     def "Update Product Price"() {
 
-
         ProductPriceRepository priceRepository=Mock(ProductPriceRepository);
-
         ProductInfoService productInfoService=Mock(ProductInfoService);
-
         ProductPriceService productPriceService=Mock(ProductPriceService);
 
         long id=101
@@ -74,10 +70,57 @@ class ProductServiceSpec extends Specification {
         product.name==name
         product.getCurrentPrice().value==22.95
 
+    }
 
+    def "Update Product Price path id conflicts with request body id field"() {
+
+        ProductPriceRepository priceRepository=Mock(ProductPriceRepository);
+        ProductInfoService productInfoService=Mock(ProductInfoService);
+        ProductPriceService productPriceService=Mock(ProductPriceService);
+
+        long id=101111
+        String name='test'
+
+        ProductPrice productPrice = new ProductPrice();
+        productPrice.value =22.95
+        productPrice.currencyCode= CurrencyCode.USD
+
+        CurrentPrice currentPrice = new CurrentPrice(value: 22.95, currencyCode: CurrencyCode.USD )
+
+        Product productInput= new Product(id: 101, name: name, currentPrice: currentPrice)
+
+        ProductService productService = new ProductService(priceRepository, productInfoService,productPriceService )
+
+        when:
+        Product product= productService.updateProduct(id, productInput)
+
+        then:
+        thrown(DataInputException)
 
     }
 
+    def "Update Product Price request body fields not valid"() {
+
+        ProductPriceRepository priceRepository=Mock(ProductPriceRepository);
+        ProductInfoService productInfoService=Mock(ProductInfoService);
+        ProductPriceService productPriceService=Mock(ProductPriceService);
+
+        long id=101111
+        ProductPrice productPrice = new ProductPrice();
+        productPrice.value =22.95
+        productPrice.currencyCode= CurrencyCode.USD
+
+        Product productInput= new Product(id: 101, name: null, currentPrice: null)
+
+        ProductService productService = new ProductService(priceRepository, productInfoService,productPriceService )
+
+        when:
+        Product product= productService.updateProduct(id, productInput)
+
+        then:
+        thrown(DataInputException)
+
+    }
 
 
 }
