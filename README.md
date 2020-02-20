@@ -3,58 +3,70 @@
 
 # Overview
 
-the project was implemented with java 8 and Spring Boot
-the database used was MongoDB, run locally
+the project was implemented with java 8 and Spring Boot  
 
-unit testing was done with the spock framework
+the database used was MongoDB, run locally  
 
-tools used included: maven, Postman, git, mongodb
+unit testing was done with the spock framework  
 
+tools used included: maven, Postman, git, mongodb  
+these should be installed locally  
+
+accessing the project:  
+
+download or clone the github project:  
+https://github.com/tmart593/myRetail  
 
 # Database setup
 
-Install MongoDB and start running on localhost:27017
+Install MongoDB and start running on localhost:27017  
 
-run the database setup script located in <project root dir>/scripts/dbsetup.js
-$ mongo localhost:27017/myretail ./scripts/dbsetup.js
+run the database setup script located in <project root dir>/scripts/dbsetup.js  
 
+$ mongo localhost:27017/myretail ./scripts/dbsetup.js  
+
+  
+  
 # Running the application
 
-download or clone the github project:
-https://github.com/tmart593/myRetail
+from the project install dir build, test and run the application  
 
-from the project install dir build, test and run the application
-$ mvn clean package
-$ java -jar target/myretail-0.0.1-SNAPSHOT.jar
+$ mvn clean package  
+$ java -jar target/myretail-0.0.1-SNAPSHOT.jar  
 
 # Testing
 
-unit tests can be run (from the project root dir):
-$ mvn test
+unit tests can be run (from the project root dir):  
 
-for blackbox/functional testing,
-open Postman app and import the request collection
-found at <project root>/myretail.postman_collection.json
+$ mvn test  
 
-open and run each of the tests in postman
+for blackbox/functional testing,  
+open Postman app and import the request collection  
+found at <project root>/myretail.postman_collection.json  
 
-alternatively, curl commands can be used to run tests -
+open and run each of the tests in postman  
 
-note that the -v option produces verbose output so the return http status codes are evident
-(the -s (silent) option removes the progress meter)
+alternatively, curl commands can be used to run tests -  
 
-  $ curl -vs http://localhost:8080/products/13860425 
-	$ curl -vs http://localhost:8080/products/13860429 
-	$ curl -vs -H "Content-Type: application/json" -X PUT -d '{"id": 13860425,"name": "Godzilla (Blu-ray)","current_price": {"value": 11.78,"validCurrencyCode": true,"currency_code": "USD"}}' \
-	         http://localhost:8080/products/13860425 
+note that the -v option produces verbose output so the 
+return http status codes are evident   
+(the -s (silent) option removes the progress meter)  
 
-output can also be directed to a file by appending to the command: > test_GET_notfound.txt 2>&1
+  $ curl -vs http://localhost:8080/products/13860425  
+	$ curl -vs http://localhost:8080/products/13860429  
+	$ curl -vs -H "Content-Type: application/json" -X PUT -d '{"id": 13860425,"name": "Godzilla (Blu-ray)","current_price": {"value": 11.78,"validCurrencyCode": true,"currency_code": "USD"}}' \  
+	         http://localhost:8080/products/13860425  
+
+output can also be directed to a file by appending to the command: > test_GET_notfound.txt 2>&1  
 
 
-# Requirements for getting the app ready for production:
+
+# Preparing for production 
+
 
 refactor Update Product api - 
 
+```
 the price info service should be replaced with an actual internal service
 (including all the tests for each env)
 
@@ -106,7 +118,8 @@ jenkins should handle creating tags for releases (based on the master branch)
                    
 performance tests done with jmeter or similar load testing tool
           
-     
+```
+  
 
 
 
