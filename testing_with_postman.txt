@@ -1,0 +1,19 @@
+
+if you do not have postman it can be downloaded from https://www.postman.com/
+
+the following tests were created in postman version 7.17.0
+
+
+in a terminal window, start the application from the project root dir:
+
+$ java -jar ./target/myretail-0.0.1-SNAPSHOT.jar
+
+start postman and import the collection file from the project root directory
+ 'myretail.postman_collection.json'
+ 
+
+
+
+
+
+

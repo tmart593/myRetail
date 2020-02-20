@@ -1,0 +1,16 @@
+/build/
+
+# intellij
+.idea
+*.iml
+
+# spring boot
+out
+target
+
+#log
+*.log
+*.gz
+**/.DS_Store
+*.patch
+
