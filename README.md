@@ -1,28 +1,24 @@
 
 
 
-overview
+# Overview
 
 the project was implemented with java 8 and Spring Boot
 the database used was MongoDB, run locally
 
 unit testing was done with the spock framework
 
+tools used included: maven, Postman, git, mongodb
 
 
-#environment 
-
-java 8, maven, Postman, git, mongodb
-
-
-#Database setup
+# Database setup
 
 Install MongoDB and start running on localhost:27017
 
 run the database setup script located in <project root dir>/scripts/dbsetup.js
 $ mongo localhost:27017/myretail ./scripts/dbsetup.js
 
-# running the application
+# Running the application
 
 download or clone the github project:
 https://github.com/tmart593/myRetail
@@ -55,16 +51,21 @@ note that the -v option produces verbose output so the return http status codes 
 output can also be directed to a file by appending to the command: > test_GET_notfound.txt 2>&1
 
 
-#requirements for getting the app ready for production:
+# Requirements for getting the app ready for production:
 
-refactor Update Product api
+refactor Update Product api - 
 
-     several approaches could be taken -
+the price info service should be replaced with an actual internal service
+(including all the tests for each env)
+
+if the update product api is intended to update
+both the price data and the other data (name etc)
+then several approaches could be taken -
      
      1. if the one service should update all the data for a product
      (ie more than just the price data), and that
      data resides in 2 data sources that cannot be
-     connected as part of a transaction (2 phase commit)
+     connected as part of a transaction or 2 phase commit,
      then some type of eventual consistency approach is needed -
      for example, through kafka messaging updates to
      each data source could taken care of -
@@ -75,10 +76,10 @@ refactor Update Product api
         and be updated independently, ie the client
         would call each one separately
 
-     3. if the 2 data sources could be part of transaction
-         ie traditional relational databases that have rollback ability
+     3. the 2 data sources could be part of a (RDBMS) transaction
+         i.e. use traditional relational databases that have rollback ability
          or even have the data stored in one relational db,
-         thus making a transaction very easy.
+         thus making a transaction very easy
 
 ___________________________________________________________
 
@@ -89,8 +90,10 @@ add Swagger support
 add profiling/monitoring such as prometheus/micrometer/grafana
 
 improve error messages for field level errors - path variables, etc
+
 __________________________________________________________
-testing and CI/CD
+
+testing and CI/CD -
 
 add more unit tests to gain 100% code coverage
 
